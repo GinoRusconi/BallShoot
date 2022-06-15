@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a237f5471c2d3c4c86da6ef782a73f5, type: 3}
+  m_Name: EnemyCircle
+  m_EditorClassIdentifier: 
+  tag: Circle
+  prefabObject: {fileID: 2777754313967279227, guid: 573f5b2a63fe5c34da2e468c3ccfec0e, type: 3}
+  sizePool: 5
