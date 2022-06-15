@@ -7720,7 +7720,7 @@ MonoBehaviour:
   _EndClick: {x: 0, y: 0, z: 0}
   _MinImpulse: 0
   _MaxImpulse: 5
-  _MagnitudImpulse: 0
+  _MagnitudImpulse: 1
   _Camera: {fileID: 519420031}
   _Gun: {fileID: 320894908}
   _MaxTimeReload: 0
