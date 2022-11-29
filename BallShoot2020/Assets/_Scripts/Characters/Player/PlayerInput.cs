@@ -2,25 +2,24 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    #region Setts and Getters
+
+    public Vector3 StartPositionClick { get => _StartPositionClick; private set => _StartPositionClick = value; }
+    public Vector3 DirectionClick { get => _DirectionClick; private set => _DirectionClick = value; }
+    public Vector3 EndClick { get => _EndClick; private set => _EndClick = value; }
+    public float MagnitudImpulse { get => _MagnitudImpulse; private set => _MagnitudImpulse = value; }
+    public bool IsImpulse { get => _IsPropulse; set => _IsPropulse = value; }
+
+    #endregion Setts and Getters
+
     [Header("Puntos de Clicks")]
     [SerializeField] private Vector3 _StartPositionClick;
 
     [SerializeField] private Vector3 _DirectionClick;
     [SerializeField] private Vector3 _EndClick;
 
-    #region Setts and Getters
-
-    public Vector3 StartPositionClick { get => _StartPositionClick; set => _StartPositionClick = value; }
-    public Vector3 DirectionClick { get => _DirectionClick; set => _DirectionClick = value; }
-    public Vector3 EndClick { get => _EndClick; set => _EndClick = value; }
-    public float MagnitudImpulse { get => _MagnitudImpulse; set => _MagnitudImpulse = value; }
-    public bool IsImpulse { get => _IsPropulse; set => _IsPropulse = value; }
-
-    #endregion Setts and Getters
-
     [Header("Magnitud del arrastre")]
     [SerializeField] private float _MinImpulse;
-
     [SerializeField] private float _MaxImpulse;
     public float _MagnitudImpulse;
     private bool _IsPropulse = false;
