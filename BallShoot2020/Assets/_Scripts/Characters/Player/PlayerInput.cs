@@ -14,7 +14,6 @@ public class PlayerInput : MonoBehaviour
 
     [Header("Puntos de Clicks")]
     [SerializeField] private Vector3 _StartPositionClick;
-
     [SerializeField] private Vector3 _DirectionClick;
     [SerializeField] private Vector3 _EndClick;
 
@@ -26,18 +25,18 @@ public class PlayerInput : MonoBehaviour
 
     [Header("Objetos para referenciar")]
     [SerializeField] private Camera _Camera;
-
     [SerializeField] private GunCore _Gun;
+    
+    public RectTransform _CanvasParent;
+    public RectTransform _Joystick;
+    public Vector2 _StartJoystickPosition;
+    
     private TimeManager _TimeManager;
 
     public float _MaxTimeReload = 2f;
     public float _TimeToReload = 0f;
     public bool _IsShoot = false;
 
-    public RectTransform _CanvasParent;
-    public RectTransform _Joystick;
-    public Vector2 _StartJoystickPosition;
-   
 
     private void Awake()
     {
@@ -81,7 +80,6 @@ public class PlayerInput : MonoBehaviour
                 _IsShoot = !_IsShoot;
             }
         }
-        
     }
 
     private void EndedAction()
@@ -92,8 +90,6 @@ public class PlayerInput : MonoBehaviour
         IsImpulse = true;
         _IsShoot = true;
         _Gun.Shoot();
-
-        
     }
     private void SetStartPosition(Touch touch)
     {
@@ -110,7 +106,7 @@ public class PlayerInput : MonoBehaviour
         if (EndClick != StartPositionClick)
         {
             DirectionClick = _Camera.ScreenToViewportPoint(touch.position) - StartPositionClick;
-            //DirectionClick = DirectionClick.normalized;
+            DirectionClick = DirectionClick.normalized;
         }
     }
 
@@ -122,6 +118,6 @@ public class PlayerInput : MonoBehaviour
 
     private void OnDisable()
     {
-        _Joystick.anchoredPosition = _StartJoystickPosition;
+        //_Joystick.anchoredPosition = _StartJoystickPosition;
     }
 }

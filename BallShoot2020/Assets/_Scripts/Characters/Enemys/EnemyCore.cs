@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 
 public class EnemyCore : MonoBehaviour
@@ -10,27 +8,27 @@ public class EnemyCore : MonoBehaviour
     # endregion Setts And Getters
 
     [Header("State Enemy")]
-    [SerializeField] private float speedEnemy = 5f;
-    [SerializeField] private int life = 1;
+    [SerializeField] protected float speedEnemy = 5f;
+    [SerializeField] protected int life = 1;
 
     [Header("Objects Reference")]
-    [SerializeField] private GameObject graphicEnemy;
-    [SerializeField] private GameObject deadEnemy;
+    [SerializeField] protected GameObject graphicEnemy;
+    [SerializeField] protected GameObject deadEnemy;
 
-    private ParticleSystem particleDeadEnemy;
-    private AudioSource _enemyDeadSound;
+    protected ParticleSystem particleDeadEnemy;
+    protected AudioSource _enemyDeadSound;
 
-    private LayerMask defautLayerMask;
-    private Rigidbody2D _RigidBody2D;
+    protected LayerMask defautLayerMask;
+    protected Rigidbody2D _RigidBody2D;
 
     //movement variables
-    private Vector2 myDirection;
+    protected Vector2 myDirection;
 
-    private float angle;
-    private float xVelocity;
-    private float yVelocity;
+    protected float angle;
+    protected float xVelocity;
+    protected float yVelocity;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _RigidBody2D = GetComponent<Rigidbody2D>();
         _enemyDeadSound = GetComponent<AudioSource>();
@@ -38,32 +36,35 @@ public class EnemyCore : MonoBehaviour
         defautLayerMask = LayerMask.NameToLayer("Default");
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         PrepareToEnable();
         SetVelocityStart();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        SetRotation();
+        
+        SetRotation(_RigidBody2D.velocity.normalized);
     }
 
-    private void SetRotation()
+    protected void SetRotation(Vector2 directionToLook)
     {
-        myDirection = _RigidBody2D.velocity;
-        angle = Mathf.Atan2(myDirection.y, myDirection.x) * Mathf.Rad2Deg;
-        _RigidBody2D.rotation = angle;
+        myDirection = directionToLook;
+        Quaternion to = Quaternion.FromToRotation(Vector3.right, myDirection);
+        transform.rotation = to;
+
+        Debug.DrawRay(transform.position, transform.right * 10, Color.green);
     }
 
-    private void SetVelocityStart()
+    protected void SetVelocityStart()
     {
         xVelocity = Random.Range(0, 2) == 0 ? 1 : -1;
         yVelocity = Random.Range(0, 2) == 0 ? 1 : -1;
         _RigidBody2D.velocity = new Vector2(xVelocity, yVelocity) * speedEnemy;
     }
 
-    private void PrepareToEnable()
+    protected void PrepareToEnable()
     {
         deadEnemy.SetActive(false);
         graphicEnemy.SetActive(true);
@@ -76,7 +77,7 @@ public class EnemyCore : MonoBehaviour
         CheckLife(distanceBulletScore);
     }
 
-    private void CheckLife(int distanceBulletScore)
+    protected void CheckLife(int distanceBulletScore)
     {
         if (life < 1)
         {
@@ -85,7 +86,7 @@ public class EnemyCore : MonoBehaviour
         }
     }
 
-    private IEnumerator Die()
+    protected IEnumerator Die()
     {
         gameObject.layer = LayerMask.NameToLayer("Dead");
         graphicEnemy.SetActive(false);

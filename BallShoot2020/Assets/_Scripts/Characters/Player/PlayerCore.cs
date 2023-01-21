@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class PlayerCore : MonoBehaviour
 {
-    [SerializeField] private GameObject _deadPlayer;
-    private TimeManager _timeManager;
+    #region Components
+
     public PlayerInput _playerInput;
+    private TimeManager _timeManager;
+    private Rigidbody2D myRb;
+
+    #endregion Components
+
+    [SerializeField] private GameObject _deadPlayer;
     public GameObject _Body;
     public bool _playerDead = false;
-    private Rigidbody2D myRb;
 
     void Start()
     {
@@ -44,6 +49,7 @@ public class PlayerCore : MonoBehaviour
     public void PlayerRestartExtraLife()
     {
         transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
         _deadPlayer.GetComponent<ParticleSystem>().Stop();
         _deadPlayer.SetActive(false);
         gameObject.layer = LayerMask.NameToLayer("Player");
