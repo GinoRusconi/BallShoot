@@ -36,7 +36,7 @@ public class PlayerInput : MonoBehaviour
     public float _MaxTimeReload = 2f;
     public float _TimeToReload = 0f;
     public bool _IsShoot = false;
-
+    public bool ReverseDirection = true;
 
     private void Awake()
     {
@@ -60,12 +60,30 @@ public class PlayerInput : MonoBehaviour
                 {
                     case TouchPhase.Began:
                         SetStartPosition(touch);
+                        _TimeManager.DoSlowMotion();
+                        if (ReverseDirection)
+                        {
+                            SetReverseDirection(touch);
+                        }
+                        else
+                        {
+                            SetNormalDirection(touch);
+                        }
+                        break;
                         break;
 
                     case TouchPhase.Moved:
                         _TimeManager.DoSlowMotion();
                         SetMagnitudImpulse(touch);
-                        SetDirection(touch);
+
+                        if (ReverseDirection)
+                        {
+                            SetReverseDirection(touch);
+                        }
+                        else
+                        {
+                            SetNormalDirection(touch);
+                        }
                         break;
 
                     case TouchPhase.Ended:
@@ -99,15 +117,23 @@ public class PlayerInput : MonoBehaviour
         StartPositionClick = _Camera.ScreenToViewportPoint(touch.position);
     }
 
-    private void SetDirection(Touch touch)
+    private void SetReverseDirection(Touch touch)
     {
         EndClick = _Camera.ScreenToViewportPoint(touch.position);
 
         if (EndClick != StartPositionClick)
         {
-            DirectionClick = _Camera.ScreenToViewportPoint(touch.position) - StartPositionClick;
+            DirectionClick = EndClick - StartPositionClick;
             DirectionClick = DirectionClick.normalized;
         }
+    }
+
+    private void SetNormalDirection(Touch touch)
+    {
+        EndClick = _Camera.ScreenToViewportPoint(touch.position);
+
+        DirectionClick = transform.position - EndClick;
+        DirectionClick = DirectionClick.normalized;
     }
 
     private void SetMagnitudImpulse(Touch touch)

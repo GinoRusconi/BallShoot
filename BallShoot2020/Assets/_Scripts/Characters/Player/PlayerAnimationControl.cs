@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimationControl : MonoBehaviour
@@ -17,7 +15,8 @@ public class PlayerAnimationControl : MonoBehaviour
     {
         if (!_PlayerInput.IsImpulse)
         {
-            RotatePlayer();
+            //RotatePlayer();
+            RotatePlayerToPoint();
         }
         if (_PlayerInput._IsShoot)
         {
@@ -36,8 +35,20 @@ public class PlayerAnimationControl : MonoBehaviour
         Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, 90) * targetLocation;
 
         transform.rotation = Quaternion.LookRotation(Vector3.forward, rotatedVectorToTarget);
-       
+
     }
+
+    private void RotatePlayerToPoint()
+    {
+        Vector3 myDirection = _PlayerInput.DirectionClick;
+        Quaternion to = Quaternion.FromToRotation(Vector3.right, myDirection);
+        transform.rotation = to;
+
+        Debug.DrawRay(transform.position, transform.right * 10, Color.green);
+    }
+
+
+
     /*
     private void CalculateAngularRotation()
     {
@@ -48,5 +59,5 @@ public class PlayerAnimationControl : MonoBehaviour
         transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y, angle);
     }
     */
-    
+
 }
